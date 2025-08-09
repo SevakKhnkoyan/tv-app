@@ -90,7 +90,7 @@ const FeaturedVideo = forwardRef<
         <span className="uppercase font-semibold text-gray-600 tracking-widest">{movie.Category}</span>
         {titleImageSrc ? (
           <img
-            src={featuredTitleImage}
+            src={featuredTitleImage} // to be changed by urls, if there is such data in json
             alt={movie.Title}
             className="w-1/3 mt-2"
           />

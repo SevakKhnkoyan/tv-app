@@ -11,7 +11,7 @@ export default function TrendingCarousel({ movies, onSelect }: { movies: Movie[]
           <SwiperSlide key={movie.Id}>
             <div onClick={() => onSelect(movie)} className="cursor-pointer">
               <img
-                src={new URL(`../assets/${movie.CoverImage}`, import.meta.url).toString()}
+                src={`../assets/${movie.CoverImage}`}
                 alt={movie.Title}
                 className="rounded"
               />
