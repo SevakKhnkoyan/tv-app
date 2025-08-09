@@ -7,19 +7,20 @@ import { useDispatch } from 'react-redux';
 import { setLastSeen } from '../videos/videosSlice';
 
 export default function Home() {
-  const { data: movies = [] } = useGetVideosQuery();
-  const [featured, setFeatured] = useState<any>(null);
+  const { data } = useGetVideosQuery();
+  const movies: any[] = data?.TrendingNow ?? [];
+  const [featured, setFeatured] = useState<any>(data?.Featured ?? null);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (movies.length) {
-      setFeatured(movies[0]);
+     if (data?.TrendingNow.length) {
+      setFeatured(data.Featured);
     }
-  }, [movies]);
+  }, [data]);
 
   const handleSelect = (movie: any) => {
     setFeatured(movie);
-    dispatch(setLastSeen(movie.id));
+    dispatch(setLastSeen(movie.Id));
     setTimeout(() => {
       // Here you can switch to background video
     }, 2000);

@@ -1,9 +1,9 @@
 import {useDispatch} from 'react-redux'
 import {bindActionCreators} from '@reduxjs/toolkit'
-import {githubActions} from '../store/github/github.slice'
+import {setLastSeen} from '../videos/videosSlice'
 
 const actions = {
-  ...githubActions
+  setLastSeen
 }
 
 export const useActions = () => {
