@@ -32,7 +32,16 @@ const bottomItems: MenuItem[] = [
 export default function SidebarMenu({selectedMenuItem, onSelectMenuItem}: SidebarMenuProps) {
   return (
     <motion.aside
-      className="group/sidebar fixed left-0 top-0 h-full bg-black text-white overflow-hidden"
+      className="
+        group/sidebar
+        fixed left-0 top-0 h-full
+        bg-black text-white
+        overflow-x-hidden 
+        overflow-y-auto
+        [scrollbar-width:none]
+        [-ms-overflow-style:none]
+        [&::-webkit-scrollbar]:hidden
+      "
       initial={{ width: 130 }}
       whileHover={{
         width: 350,
@@ -100,7 +109,7 @@ export default function SidebarMenu({selectedMenuItem, onSelectMenuItem}: Sideba
             })}
           </ul>
         </div>
-        <ul className="flex flex-col">
+        <ul className="mt-8 flex flex-col">
           {bottomItems.map((item) => (
             <li
               key={item.key}
