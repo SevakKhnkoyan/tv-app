@@ -8,13 +8,16 @@ import {
 } from 'react';
 import { Movie } from '../models/movie';
 import featuredCoverImage from '../assets/FeaturedCoverImage.png';
+import featuredTitleImage from '../assets/FeaturedTitleImage.png';
+import { CaretRightFilled } from '@ant-design/icons';
 
 export interface FeaturedVideoHandle {
   play: () => void;
 }
 
 const formatDuration = (duration: string) => {
-  const seconds = parseInt(duration, 10);
+  const seconds = Number(duration);
+  // const seconds = parseInt(duration, 10);
   if (Number.isNaN(seconds)) return duration;
   const totalMinutes = Math.floor(seconds / 60);
   const hours = Math.floor(totalMinutes / 60);
@@ -61,15 +64,16 @@ const FeaturedVideo = forwardRef<
         };
 
     const titleImageSrc = movie.TitleImage
-      ? new URL(`../assets/${movie.TitleImage}`, import.meta.url).toString()
+      ? movie.TitleImage
       : undefined;
 
     return (
       <div
         className="
-          relative
+          relative p-6
           flex flex-col
-          justify-end p-6
+          justify-center
+          h-[75vh]
           text-white
         "
         style={bgStyle}
@@ -83,28 +87,54 @@ const FeaturedVideo = forwardRef<
           muted
           playsInline
         />
-        <span className="uppercase font-semibold">{movie.Category}</span>
+        <span className="uppercase font-semibold text-gray-600 tracking-widest">{movie.Category}</span>
         {titleImageSrc ? (
           <img
-            src={titleImageSrc}
+            src={featuredTitleImage}
             alt={movie.Title}
-            className="w-1/3 max-w-xs mt-2"
+            className="w-1/3 mt-2"
           />
         ) : (
           <h2 className="text-4xl font-bold">{movie.Title}</h2>
         )}
-        <div className="flex gap-2 items-center mt-2 text-sm">
+        <div className="flex gap-2 items-center mt-2 text-lg">
           <span>{movie.ReleaseYear}</span>
           <span>{movie.MpaRating}</span>
           <span>{formatDuration(movie.Duration)}</span>
         </div>
         <p className="mt-2 max-w-lg">{movie.Description}</p>
-        <Button type="primary" onClick={onPlay}>
+        <div className="mt-4 flex gap-3">
+          <Button
+            type="primary"
+            onClick={onPlay}
+            icon={<CaretRightFilled />}
+            className="
+              h-[72px] w-[240px] rounded-[40px]
+              bg-[#F1F1F1] text-black border-none
+              font-bold text-3xl
+              hover:opacity-90 active:opacity-80
+              shadow-sm hover:shadow-md
+            "
+          >
             Play
           </Button>
-          <Button ghost onClick={onMoreInfo}>
+          <Button
+            ghost
+            onClick={onMoreInfo}
+            className="
+              h-[72px] w-[240px] rounded-[40px]
+              text-white border-none
+              font-bold text-3xl
+              hover:opacity-90 active:opacity-80
+              shadow-sm hover:shadow-md
+            "
+            style={{
+              backgroundImage: "linear-gradient(128deg, #2727F5 0%, #001671 100%)",
+            }}
+          >
             More Info
           </Button>
+        </div>
       </div>
     );
   }

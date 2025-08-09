@@ -76,7 +76,6 @@ export default function Home() {
           z-0
           pl-[130px]
           flex-1
-          h-[calc(100vh-110px)]
         "
       >
         <FeaturedVideo
@@ -85,8 +84,7 @@ export default function Home() {
           onPlay={handlePlay}
           onMoreInfo={handleMoreInfo}
         />
-        {/* <h3 className="text-white text-xl p-4">Trending Now</h3>
-        <TrendingCarousel movies={movies} onSelect={handleSelect} /> */}
+        {/* <TrendingCarousel movies={movies} onSelect={handleSelect} /> */}
       </div>
     </div>
   );
