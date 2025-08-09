@@ -34,7 +34,10 @@ export default function SidebarMenu({selectedMenuItem, onSelectMenuItem}: Sideba
     <motion.aside
       className="group/sidebar fixed left-0 top-0 h-full bg-black text-white overflow-hidden"
       initial={{ width: 130 }}
-      whileHover={{ width: 350, backgroundColor: 'rgba(0,0,0,0.8)' }}
+      whileHover={{
+        width: 350,
+        background: 'linear-gradient(to right, rgba(0,0,0,1) 130px, rgba(0,0,0,0.8) 100%)'
+      }}
       transition={{ duration: 0.3 }}
     >
       <div className="flex h-full px-9 py-14 flex-col justify-between">
@@ -61,7 +64,9 @@ export default function SidebarMenu({selectedMenuItem, onSelectMenuItem}: Sideba
                     flex items-center 
                     gap-14 p-4
                     cursor-pointer
-                    ${isActive ? 'bg-[#3B486D] rounded-full' : 'hover:bg-[#3B486D] rounded-xl'}
+                    ${isActive
+                      ? 'bg-[#3B486D] group-hover/sidebar:rounded-xl rounded-full'
+                      : 'hover:bg-[#3B486D] rounded-xl'}
                   `}
                 >
                   <img
