@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import SidebarMenu from '../components/SidebarMenu';
-import FeaturedVideo from '../components/FeaturedVideo';
+import FeaturedVideo, { FeaturedVideoHandle } from '../components/FeaturedVideo';
 import TrendingCarousel from '../components/TrendingCarousel';
 import { useGetVideosQuery } from '../videos/videosApi';
 import { useDispatch } from 'react-redux';
@@ -11,6 +11,7 @@ export default function Home() {
   const movies: any[] = data?.TrendingNow ?? [];
   const [featured, setFeatured] = useState<any>(data?.Featured ?? null);
   const dispatch = useDispatch();
+  const featuredRef = useRef<FeaturedVideoHandle>(null);
 
   useEffect(() => {
      if (data?.TrendingNow.length) {
@@ -22,7 +23,7 @@ export default function Home() {
     setFeatured(movie);
     dispatch(setLastSeen(movie.Id));
     setTimeout(() => {
-      // Here you can switch to background video
+      featuredRef.current?.play();
     }, 2000);
   };
 
@@ -30,7 +31,7 @@ export default function Home() {
     <div className="flex">
       <SidebarMenu />
       <div className="ml-[60px] flex-1">
-        <FeaturedVideo movie={featured} />
+        <FeaturedVideo ref={featuredRef} movie={featured} />
         <h3 className="text-white text-xl p-4">Trending Now</h3>
         <TrendingCarousel movies={movies} onSelect={handleSelect} />
       </div>
