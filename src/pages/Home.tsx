@@ -71,7 +71,14 @@ export default function Home() {
   return (
     <div className="flex">
       <SidebarMenu selectedMenuItem={selectedMenuItem} onSelectMenuItem={setSelectedMenuItem}/>
-      <div className="ml-[130px] flex-1">
+      <div 
+        className="
+          z-0
+          pl-[130px]
+          flex-1
+          h-[calc(100vh-110px)]
+        "
+      >
         <FeaturedVideo
           ref={featuredRef}
           movie={featured}
