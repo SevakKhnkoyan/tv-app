@@ -33,6 +33,7 @@ export default function SidebarMenu({selectedMenuItem, onSelectMenuItem}: Sideba
   return (
     <motion.aside
       className="
+        z-40
         group/sidebar
         fixed left-0 top-0 h-full
         bg-black text-white
@@ -45,7 +46,7 @@ export default function SidebarMenu({selectedMenuItem, onSelectMenuItem}: Sideba
       initial={{ width: 130 }}
       whileHover={{
         width: 350,
-        background: 'linear-gradient(to right, rgba(0,0,0,1) 130px, rgba(0,0,0,0.8) 100%)'
+        background: 'linear-gradient(to right, rgba(0,0,0,1) 130px, rgba(0,0,0,0.2) 100%)'
       }}
       transition={{ duration: 0.3 }}
     >
