@@ -1,19 +1,14 @@
 import { Button } from 'antd';
-import {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from 'react';
 import { Movie } from '../models/movie';
 import featuredCoverImage from '../assets/FeaturedCoverImage.png';
 import featuredTitleImage from '../assets/FeaturedTitleImage.png';
 import { CaretRightFilled } from '@ant-design/icons';
 
-export interface FeaturedVideoHandle {
-  play: () => void;
-}
+export interface IFeaturedVideo {
+  movieToShow: Movie | null;
+  onPlay?: () => void;
+  onMoreInfo?: () => void;
+};
 
 const formatDuration = (duration: string) => {
   const seconds = Number(duration);
@@ -25,37 +20,17 @@ const formatDuration = (duration: string) => {
   return hours ? `${hours}h ${minutes}m` : `${minutes}m`;
 };
 
-const FeaturedVideo = forwardRef<
-  FeaturedVideoHandle,
-  { movie: Movie | null; onPlay?: () => void; onMoreInfo?: () => void }
->(({
-  movie,
+const FeaturedVideo: React.FC<IFeaturedVideo> = ({
+  movieToShow,
   onPlay,
   onMoreInfo,
-}, ref) => {
-    const videoRef = useRef<HTMLVideoElement>(null);
-    const [showVideo, setShowVideo] = useState(false);
+}) => {
+    const isMovieToShowSelected = Boolean(movieToShow?.VideoUrl);
 
-    useEffect(() => {
-      if (videoRef.current) {
-        videoRef.current.pause();
-        videoRef.current.currentTime = 0;
-      }
-      setShowVideo(false);
-    }, [movie]);
-
-    useImperativeHandle(ref, () => ({
-      play: () => {
-        if (videoRef.current) {
-          videoRef.current.play();
-          setTimeout(() => setShowVideo(true), 1000);
-        }
-      },
-    }));
-
-    if (!movie) return null;
-
-    const bgStyle = showVideo
+    console.log("🚀 ~ FeaturedVideo ~ movieToShow:", movieToShow)
+    if (!movieToShow) return null;
+    
+    const bgStyle = isMovieToShowSelected
       ? {}
       : {
           backgroundImage: `url(${featuredCoverImage})`,
@@ -63,8 +38,9 @@ const FeaturedVideo = forwardRef<
           backgroundPosition: 'center',
         };
 
-    const titleImageSrc = movie.TitleImage
-      ? movie.TitleImage
+
+    const titleImageSrc = movieToShow.TitleImage
+      ? movieToShow.TitleImage
       : undefined;
 
     return (
@@ -80,31 +56,31 @@ const FeaturedVideo = forwardRef<
         style={bgStyle}
       >
         <video
-          ref={videoRef}
-          src={movie.VideoUrl}
+          // src={movieToShow.VideoUrl}
+          src={'https://www.youtube.com/watch?v=yLOM8R6lbzg'}
           className={`absolute top-0 left-0 w-full h-full object-cover ${
-            showVideo ? '' : 'hidden'
+            isMovieToShowSelected ? '' : 'hidden'
           }`}
           muted
           playsInline
         />
         <div className='p-6'>
-          <span className="uppercase font-semibold text-gray-600 tracking-widest">{movie.Category}</span>
+          <span className="uppercase font-semibold text-gray-600 tracking-widest">{movieToShow.Category}</span>
           {titleImageSrc ? (
             <img
             src={featuredTitleImage} // to be changed by urls, if there is such data in json
-            alt={movie.Title}
+            alt={movieToShow.Title}
             className="w-1/3 mt-2"
             />
           ) : (
-            <h2 className="text-4xl font-bold">{movie.Title}</h2>
+            <h2 className="text-4xl font-bold">{movieToShow.Title}</h2>
           )}
           <div className="flex gap-2 items-center mt-2 text-lg">
-            <span>{movie.ReleaseYear}</span>
-            <span>{movie.MpaRating}</span>
-            <span>{formatDuration(movie.Duration)}</span>
+            <span>{movieToShow.ReleaseYear}</span>
+            <span>{movieToShow.MpaRating}</span>
+            <span>{formatDuration(movieToShow.Duration)}</span>
           </div>
-          <p className="mt-2 max-w-lg">{movie.Description}</p>
+          <p className="mt-2 max-w-lg">{movieToShow.Description}</p>
           <div className="mt-4 flex gap-3">
             <Button
               type="primary"
@@ -140,7 +116,6 @@ const FeaturedVideo = forwardRef<
         </div>
       </div>
     );
-  }
-);
+  };
 
 export default FeaturedVideo;

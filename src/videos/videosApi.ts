@@ -8,7 +8,7 @@ export const videosApi = createApi({
   baseQuery: fakeBaseQuery<VideosResponse>(),
   endpoints: (builder) => ({
     getVideos: builder.query<VideosResponse, void>({
-      queryFn: async () => ({ data: videosData }),
+      queryFn: () => ({ data: videosData }),
     }),
   }),
 });

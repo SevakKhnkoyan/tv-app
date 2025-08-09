@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import SidebarMenu from '../components/SidebarMenu';
-import FeaturedVideo, { FeaturedVideoHandle } from '../components/FeaturedVideo';
+import FeaturedVideo from '../components/FeaturedVideo';
 import TrendingCarousel from '../components/TrendingCarousel';
 import { useGetVideosQuery } from '../videos/videosApi';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,21 +10,22 @@ import { Movie } from '../models/movie';
 
 export default function Home() {
   const { data } = useGetVideosQuery();
-  const [selectedMenuItem, setSelectedMenuItem] = useState<string>('home');
-  const [featured, setFeatured] = useState<Movie | null>(data?.Featured ?? null);
   const dispatch = useDispatch();
+  const [selectedMenuItem, setSelectedMenuItem] = useState<string>('home');
+  const [movieToShow, setMovieToShow] = useState<Movie | null>(null);
   const [movies, setMovies] = useState<Movie[]>([]);
-  const featuredRef = useRef<FeaturedVideoHandle>(null);
   const lastSeenId = useSelector((state: RootState) => state.videos.lastSeenId);
-  const playTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (data?.Featured) setMovieToShow(data.Featured);
+  }, [data]);
 
   useEffect(() => {
      if (data?.TrendingNow.length) {
       const sorted = [...data.TrendingNow]
         .sort(
-          (a, b) => new Date(b.Date).getTime() - new Date(a.Date).getTime()
+          (a, b) => Date.parse(b.Date) - Date.parse(a.Date)
         )
-        .slice(0, 50);
 
       if (lastSeenId) {
         const index = sorted.findIndex((m) => m.Id === lastSeenId);
@@ -35,45 +36,30 @@ export default function Home() {
       }
 
       setMovies(sorted);
-      setFeatured(data.Featured);
     }
   }, [data, lastSeenId]);
 
   const handlePlay = () => {
-    if (featured) {
-      if (lastSeenId !== featured.Id) {
-        dispatch(setLastSeen(featured.Id));
-      }
-      featuredRef.current?.play();
-    }
+    console.log('Play clicked');
   };
 
   const handleMoreInfo = () => {
-    if (featured) {
-      console.log('More info for', featured.Title);
-    }
+    console.log('More info clicked');
   };
 
 
   const handleSelect = (movie: Movie) => {
-    setFeatured(movie);
-     if (lastSeenId !== movie.Id) {
+    setMovieToShow(movie);
+    if (lastSeenId !== movie.Id) {
       dispatch(setLastSeen(movie.Id));
     }
-    if (playTimeoutRef.current) {
-      clearTimeout(playTimeoutRef.current);
-    }
-    playTimeoutRef.current = setTimeout(() => {
-      featuredRef.current?.play();
-    }, 2000);
   };
 
   return (
     <>
       <SidebarMenu selectedMenuItem={selectedMenuItem} onSelectMenuItem={setSelectedMenuItem}/>
       <FeaturedVideo
-        ref={featuredRef}
-        movie={featured}
+        movieToShow={movieToShow}
         onPlay={handlePlay}
         onMoreInfo={handleMoreInfo}
       />

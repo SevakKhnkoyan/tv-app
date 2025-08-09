@@ -1,4 +1,5 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Mousewheel } from 'swiper/modules';
 import 'swiper/css';
 import { Movie } from '../models/movie';
 
@@ -16,7 +17,14 @@ export default function TrendingCarousel({ movies, onSelect }: { movies: Movie[]
       }}
     >
       <h3 className="text-white text-2xl p-4">Trending Now</h3>
-      <Swiper slidesPerView={8} spaceBetween={32}>
+      <Swiper
+        modules={[Mousewheel]} 
+        mousewheel={{
+          sensitivity: 1,
+        }}
+        slidesPerView={8}
+        spaceBetween={32}
+      >
         {movies.map(movie => (
           <SwiperSlide key={movie.Id}>
             <div onClick={() => onSelect(movie)} className="cursor-pointer">
