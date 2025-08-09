@@ -7,6 +7,7 @@ import {
   useState,
 } from 'react';
 import { Movie } from '../models/movie';
+import featuredCoverImage from '../assets/FeaturedCoverImage.png';
 
 export interface FeaturedVideoHandle {
   play: () => void;
@@ -54,9 +55,7 @@ const FeaturedVideo = forwardRef<
     const bgStyle = showVideo
       ? {}
       : {
-          backgroundImage: movie.CoverImage
-            ? `url(${new URL(`../assets/${movie.CoverImage}`, import.meta.url).toString()})`
-            : undefined,
+          backgroundImage: `url(${featuredCoverImage})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         };
@@ -67,7 +66,12 @@ const FeaturedVideo = forwardRef<
 
     return (
       <div
-        className="relative h-[500px] flex flex-col justify-end p-6 text-white"
+        className="
+          relative
+          flex flex-col
+          justify-end p-6
+          text-white
+        "
         style={bgStyle}
       >
         <video

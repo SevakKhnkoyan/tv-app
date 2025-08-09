@@ -71,16 +71,16 @@ export default function Home() {
   return (
     <div className="flex">
       <SidebarMenu selectedMenuItem={selectedMenuItem} onSelectMenuItem={setSelectedMenuItem}/>
-      {/* <div className="ml-[60px] flex-1">
+      <div className="ml-[130px] flex-1">
         <FeaturedVideo
           ref={featuredRef}
           movie={featured}
           onPlay={handlePlay}
           onMoreInfo={handleMoreInfo}
         />
-        <h3 className="text-white text-xl p-4">Trending Now</h3>
-        <TrendingCarousel movies={movies} onSelect={handleSelect} />
-      </div> */}
+        {/* <h3 className="text-white text-xl p-4">Trending Now</h3>
+        <TrendingCarousel movies={movies} onSelect={handleSelect} /> */}
+      </div>
     </div>
   );
 }
