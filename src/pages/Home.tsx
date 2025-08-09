@@ -69,23 +69,15 @@ export default function Home() {
   };
 
   return (
-    <div className="flex">
+    <>
       <SidebarMenu selectedMenuItem={selectedMenuItem} onSelectMenuItem={setSelectedMenuItem}/>
-      <div 
-        className="
-          z-0
-          pl-[130px]
-          flex-1
-        "
-      >
-        <FeaturedVideo
-          ref={featuredRef}
-          movie={featured}
-          onPlay={handlePlay}
-          onMoreInfo={handleMoreInfo}
-        />
-        <TrendingCarousel movies={movies} onSelect={handleSelect} />
-      </div>
-    </div>
+      <FeaturedVideo
+        ref={featuredRef}
+        movie={featured}
+        onPlay={handlePlay}
+        onMoreInfo={handleMoreInfo}
+      />
+      <TrendingCarousel movies={movies} onSelect={handleSelect} />
+    </>
   );
 }

@@ -6,12 +6,17 @@ export default function TrendingCarousel({ movies, onSelect }: { movies: Movie[]
   return (
     <div
       className="
-        h-[30vh]
+        pl-[154px]
+        -mt-[10vh]
         text-white
+        h-[40vh]
       "
+      style={{
+        background: 'linear-gradient(to top, rgba(0,0,0,1) 80%, rgba(0,0,0,0) 100%)'
+      }}
     >
-      <h3 className="text-white text-xl p-4">Trending Now</h3>
-      <Swiper slidesPerView={8}>
+      <h3 className="text-white text-2xl p-4">Trending Now</h3>
+      <Swiper slidesPerView={8} spaceBetween={32}>
         {movies.map(movie => (
           <SwiperSlide key={movie.Id}>
             <div onClick={() => onSelect(movie)} className="cursor-pointer">

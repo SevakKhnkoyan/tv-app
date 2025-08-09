@@ -70,11 +70,12 @@ const FeaturedVideo = forwardRef<
     return (
       <div
         className="
-          p-6
+          pl-[130px]
+          flex-1
           flex flex-col
           justify-center
-          h-[75vh]
           text-white
+          h-[70vh]
         "
         style={bgStyle}
       >
@@ -87,53 +88,55 @@ const FeaturedVideo = forwardRef<
           muted
           playsInline
         />
-        <span className="uppercase font-semibold text-gray-600 tracking-widest">{movie.Category}</span>
-        {titleImageSrc ? (
-          <img
+        <div className='p-6'>
+          <span className="uppercase font-semibold text-gray-600 tracking-widest">{movie.Category}</span>
+          {titleImageSrc ? (
+            <img
             src={featuredTitleImage} // to be changed by urls, if there is such data in json
             alt={movie.Title}
             className="w-1/3 mt-2"
-          />
-        ) : (
-          <h2 className="text-4xl font-bold">{movie.Title}</h2>
-        )}
-        <div className="flex gap-2 items-center mt-2 text-lg">
-          <span>{movie.ReleaseYear}</span>
-          <span>{movie.MpaRating}</span>
-          <span>{formatDuration(movie.Duration)}</span>
-        </div>
-        <p className="mt-2 max-w-lg">{movie.Description}</p>
-        <div className="mt-4 flex gap-3">
-          <Button
-            type="primary"
-            onClick={onPlay}
-            icon={<CaretRightFilled />}
-            className="
+            />
+          ) : (
+            <h2 className="text-4xl font-bold">{movie.Title}</h2>
+          )}
+          <div className="flex gap-2 items-center mt-2 text-lg">
+            <span>{movie.ReleaseYear}</span>
+            <span>{movie.MpaRating}</span>
+            <span>{formatDuration(movie.Duration)}</span>
+          </div>
+          <p className="mt-2 max-w-lg">{movie.Description}</p>
+          <div className="mt-4 flex gap-3">
+            <Button
+              type="primary"
+              onClick={onPlay}
+              icon={<CaretRightFilled />}
+              className="
               h-[72px] w-[240px] rounded-[40px]
               bg-[#F1F1F1] text-black border-none
               font-bold text-3xl
-              hover:opacity-90 active:opacity-80
-              shadow-sm hover:shadow-md
-            "
-          >
-            Play
-          </Button>
-          <Button
-            ghost
-            onClick={onMoreInfo}
-            className="
+                hover:opacity-90 active:opacity-80
+                shadow-sm hover:shadow-md
+                "
+            >
+              Play
+            </Button>
+            <Button
+              ghost
+              onClick={onMoreInfo}
+              className="
               h-[72px] w-[240px] rounded-[40px]
-              text-white border-none
-              font-bold text-3xl
-              hover:opacity-90 active:opacity-80
-              shadow-sm hover:shadow-md
-            "
-            style={{
-              backgroundImage: "linear-gradient(128deg, #2727F5 0%, #001671 100%)",
-            }}
-          >
-            More Info
-          </Button>
+                text-white border-none
+                font-bold text-3xl
+                hover:opacity-90 active:opacity-80
+                shadow-sm hover:shadow-md
+                "
+              style={{
+                backgroundImage: "linear-gradient(128deg, #2727F5 0%, #001671 100%)",
+              }}
+            >
+              More Info
+            </Button>
+          </div>
         </div>
       </div>
     );
