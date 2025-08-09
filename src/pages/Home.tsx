@@ -84,7 +84,7 @@ export default function Home() {
           onPlay={handlePlay}
           onMoreInfo={handleMoreInfo}
         />
-        {/* <TrendingCarousel movies={movies} onSelect={handleSelect} /> */}
+        <TrendingCarousel movies={movies} onSelect={handleSelect} />
       </div>
     </div>
   );

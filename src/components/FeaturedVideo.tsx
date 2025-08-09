@@ -70,7 +70,7 @@ const FeaturedVideo = forwardRef<
     return (
       <div
         className="
-          relative p-6
+          p-6
           flex flex-col
           justify-center
           h-[75vh]
