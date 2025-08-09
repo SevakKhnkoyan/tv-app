@@ -6,21 +6,10 @@ import {
   useRef,
   useState,
 } from 'react';
+import { Movie } from '../models/movie';
 
 export interface FeaturedVideoHandle {
   play: () => void;
-}
-
-interface Movie {
-  Category: string;
-  Title?: string;
-  TitleImage: string;
-  ReleaseYear: string;
-  MpaRating: string;
-  Duration: string;
-  Description: string;
-  VideoUrl: string;
-  CoverImage?: string;
 }
 
 const formatDuration = (duration: string) => {
@@ -32,8 +21,14 @@ const formatDuration = (duration: string) => {
   return hours ? `${hours}h ${minutes}m` : `${minutes}m`;
 };
 
-const FeaturedVideo = forwardRef<FeaturedVideoHandle, { movie: Movie | null }>(
-  ({ movie }, ref) => {
+const FeaturedVideo = forwardRef<
+  FeaturedVideoHandle,
+  { movie: Movie | null; onPlay?: () => void; onMoreInfo?: () => void }
+>(({
+  movie,
+  onPlay,
+  onMoreInfo,
+}, ref) => {
     const videoRef = useRef<HTMLVideoElement>(null);
     const [showVideo, setShowVideo] = useState(false);
 
@@ -100,10 +95,12 @@ const FeaturedVideo = forwardRef<FeaturedVideoHandle, { movie: Movie | null }>(
           <span>{formatDuration(movie.Duration)}</span>
         </div>
         <p className="mt-2 max-w-lg">{movie.Description}</p>
-        <div className="mt-4 flex gap-2">
-          <Button type="primary">Play</Button>
-          <Button ghost>More Info</Button>
-        </div>
+        <Button type="primary" onClick={onPlay}>
+            Play
+          </Button>
+          <Button ghost onClick={onMoreInfo}>
+            More Info
+          </Button>
       </div>
     );
   }

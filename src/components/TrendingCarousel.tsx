@@ -1,13 +1,18 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
+import { Movie } from '../models/movie';
 
-export default function TrendingCarousel({ movies, onSelect }: { movies: any[], onSelect: (m: any) => void }) {
+export default function TrendingCarousel({ movies, onSelect }: { movies: Movie[], onSelect: (m: Movie) => void }) {
   return (
     <Swiper slidesPerView={8} spaceBetween={10}>
       {movies.map(movie => (
-        <SwiperSlide key={movie.id}>
+        <SwiperSlide key={movie.Id}>
           <div onClick={() => onSelect(movie)} className="cursor-pointer">
-            <img src={movie.cover} alt={movie.title} className="rounded" />
+            <img
+              src={new URL(`../assets/${movie.CoverImage}`, import.meta.url).toString()}
+              alt={movie.Title}
+              className="rounded"
+            />
           </div>
         </SwiperSlide>
       ))}
