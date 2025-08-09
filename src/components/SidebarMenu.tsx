@@ -9,6 +9,11 @@ import profileImage from '../assets/SeongGihun.png';
 
 type MenuItem = { key: string; icon?: string; label: string };
 
+type SidebarMenuProps = {
+  selectedMenuItem: string;
+  onSelectMenuItem: (key: string) => void;
+};
+
 const menuItems: MenuItem[] = [
   { key: 'search', icon: searchIcon, label: 'Search' },
   { key: 'home', icon: homeIcon, label: 'Home' },
@@ -24,7 +29,7 @@ const bottomItems: MenuItem[] = [
   { key: 'exit', label: 'Exit' },
 ];
 
-export default function SidebarMenu() {
+export default function SidebarMenu({selectedMenuItem, onSelectMenuItem}: SidebarMenuProps) {
   return (
     <motion.aside
       className="group/sidebar fixed left-0 top-0 h-full bg-black text-white overflow-hidden"
@@ -45,46 +50,49 @@ export default function SidebarMenu() {
             </span>
           </div>
           <ul className="mt-8 flex flex-col gap-6">
-            {menuItems.map((item) => (
-              <li
-                key={item.key}
-                className="
-                  group/menu-item 
-                  flex items-center 
-                  gap-14 p-4
-                  cursor-pointer
-                  hover:bg-[#3B486D]
-                  rounded-xl
-                "
-              >
-                <img
-                  src={item.icon}
-                  alt=""
-                  className="
-                    h-6 w-6 object-contain 
-                    filter grayscale 
-                    opacity-80 scale-100 
-                    transition duration-200 ease-in-out 
-                    group-hover/menu-item:grayscale-0 
-                    group-hover/menu-item:opacity-100 
-                    group-hover/menu-item:scale-110
-                  "
-                />
-                <span
-                  className="
-                    whitespace-nowrap
-                    text-2xl
-                    filter grayscale 
-                    opacity-80
-                    group-hover/menu-item:grayscale-0 
-                    group-hover/menu-item:opacity-100 
-                    group-hover/menu-item:font-bold
-                  "
+            {menuItems.map((item) => {
+              const isActive = selectedMenuItem === item.key;
+              return (
+                <li
+                  key={item.key}
+                  onClick={() => onSelectMenuItem(item.key)}
+                  className={`
+                    group/menu-item 
+                    flex items-center 
+                    gap-14 p-4
+                    cursor-pointer
+                    ${isActive ? 'bg-[#3B486D] rounded-full' : 'hover:bg-[#3B486D] rounded-xl'}
+                  `}
                 >
-                  {item.label}
-                </span>
-              </li>
-            ))}
+                  <img
+                    src={item.icon}
+                    alt=""
+                    className="
+                      h-6 w-6 
+                      filter grayscale 
+                      opacity-80 scale-100 
+                      transition duration-200 ease-in-out 
+                      group-hover/menu-item:grayscale-0 
+                      group-hover/menu-item:opacity-100 
+                      group-hover/menu-item:scale-110
+                    "
+                  />
+                  <span
+                    className="
+                      whitespace-nowrap
+                      text-2xl
+                      filter grayscale 
+                      opacity-80
+                      group-hover/menu-item:grayscale-0 
+                      group-hover/menu-item:opacity-100 
+                      group-hover/menu-item:font-bold
+                    "
+                  >
+                    {item.label}
+                  </span>
+                </li>
+              );
+            })}
           </ul>
         </div>
         <ul className="flex flex-col">

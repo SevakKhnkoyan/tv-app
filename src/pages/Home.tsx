@@ -10,6 +10,7 @@ import { Movie } from '../models/movie';
 
 export default function Home() {
   const { data } = useGetVideosQuery();
+  const [selectedMenuItem, setSelectedMenuItem] = useState<string>('home');
   const [featured, setFeatured] = useState<Movie | null>(data?.Featured ?? null);
   const dispatch = useDispatch();
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -69,8 +70,8 @@ export default function Home() {
 
   return (
     <div className="flex">
-      <SidebarMenu />
-      <div className="ml-[60px] flex-1">
+      <SidebarMenu selectedMenuItem={selectedMenuItem} onSelectMenuItem={setSelectedMenuItem}/>
+      {/* <div className="ml-[60px] flex-1">
         <FeaturedVideo
           ref={featuredRef}
           movie={featured}
@@ -79,7 +80,7 @@ export default function Home() {
         />
         <h3 className="text-white text-xl p-4">Trending Now</h3>
         <TrendingCarousel movies={movies} onSelect={handleSelect} />
-      </div>
+      </div> */}
     </div>
   );
 }
