@@ -34,14 +34,14 @@ export default function SidebarMenu() {
     >
       <div className="flex h-full flex-col justify-between">
         <div>
-          <div className="flex items-center gap-4 px-4 py-4">
+          <div className="flex items-center gap-4 px-9 py-14 opacity-0 transition-opacity group-hover/sidebar:opacity-100">
             <img
-              src="/logo192.png"
+              src="/src/assets/SeongGihun.png"
               alt="Profile"
               className="h-10 w-10 rounded-full object-cover"
             />
-            <span className="whitespace-nowrap opacity-0 transition-opacity group-hover/sidebar:opacity-100">
-              John Doe
+            <span className="whitespace-nowrap">
+              Daniel
             </span>
           </div>
           <ul className="mt-4 flex flex-col">
