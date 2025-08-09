@@ -15,6 +15,7 @@ export default function Home() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const featuredRef = useRef<FeaturedVideoHandle>(null);
   const lastSeenId = useSelector((state: RootState) => state.videos.lastSeenId);
+  const playTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
      if (data?.TrendingNow.length) {
@@ -37,10 +38,31 @@ export default function Home() {
     }
   }, [data, lastSeenId]);
 
+  const handlePlay = () => {
+    if (featured) {
+      if (lastSeenId !== featured.Id) {
+        dispatch(setLastSeen(featured.Id));
+      }
+      featuredRef.current?.play();
+    }
+  };
+
+  const handleMoreInfo = () => {
+    if (featured) {
+      console.log('More info for', featured.Title);
+    }
+  };
+
+
   const handleSelect = (movie: Movie) => {
     setFeatured(movie);
-    dispatch(setLastSeen(movie.Id));
-    setTimeout(() => {
+     if (lastSeenId !== movie.Id) {
+      dispatch(setLastSeen(movie.Id));
+    }
+    if (playTimeoutRef.current) {
+      clearTimeout(playTimeoutRef.current);
+    }
+    playTimeoutRef.current = setTimeout(() => {
       featuredRef.current?.play();
     }, 2000);
   };
@@ -49,7 +71,12 @@ export default function Home() {
     <div className="flex">
       <SidebarMenu />
       <div className="ml-[60px] flex-1">
-        <FeaturedVideo ref={featuredRef} movie={featured} />
+        <FeaturedVideo
+          ref={featuredRef}
+          movie={featured}
+          onPlay={handlePlay}
+          onMoreInfo={handleMoreInfo}
+        />
         <h3 className="text-white text-xl p-4">Trending Now</h3>
         <TrendingCarousel movies={movies} onSelect={handleSelect} />
       </div>
