@@ -63,11 +63,11 @@ export default function SidebarMenu() {
                   className="
                     h-6 w-6 object-contain 
                     filter grayscale 
-                    opacity-80 scale-95 
+                    opacity-80 scale-100 
                     transition duration-200 ease-in-out 
                     group-hover/menu-item:grayscale-0 
                     group-hover/menu-item:opacity-100 
-                    group-hover/menu-item:scale-100
+                    group-hover/menu-item:scale-110
                   "
                 />
                 <span
