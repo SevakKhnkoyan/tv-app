@@ -4,21 +4,12 @@ import ReactPlayer from 'react-player';
 import featuredCoverImage from '../assets/FeaturedCoverImage.png';
 import featuredTitleImage from '../assets/FeaturedTitleImage.png';
 import { CaretRightFilled } from '@ant-design/icons';
+import { formatDuration } from '../utils/utils';
 
 export interface IFeaturedVideo {
   movieToShow: Movie | null;
   onPlay?: () => void;
   onMoreInfo?: () => void;
-};
-
-const formatDuration = (duration: string) => {
-  const seconds = Number(duration);
-  // const seconds = parseInt(duration, 10);
-  if (Number.isNaN(seconds)) return duration;
-  const totalMinutes = Math.floor(seconds / 60);
-  const hours = Math.floor(totalMinutes / 60);
-  const minutes = totalMinutes % 60;
-  return hours ? `${hours}h ${minutes}m` : `${minutes}m`;
 };
 
 const FeaturedVideo: React.FC<IFeaturedVideo> = ({
