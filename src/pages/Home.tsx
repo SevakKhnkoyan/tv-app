@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import SidebarMenu from '../components/SidebarMenu';
 import FeaturedVideo from '../components/FeaturedVideo';
 import TrendingCarousel from '../components/TrendingCarousel';
@@ -15,6 +15,9 @@ export default function Home() {
   const [movieToShow, setMovieToShow] = useState<Movie | null>(null);
   const [movies, setMovies] = useState<Movie[]>([]);
   const lastSeenId = useSelector((state: RootState) => state.videos.lastSeenId);
+  const delayRef = useRef<ReturnType<typeof setTimeout>>();
+
+  useEffect(() => () => delayRef.current && clearTimeout(delayRef.current), []);
 
   useEffect(() => {
     if (data?.Featured) setMovieToShow(data.Featured);
@@ -49,10 +52,11 @@ export default function Home() {
 
 
   const handleSelect = (movie: Movie) => {
-    setMovieToShow(movie);
-    if (lastSeenId !== movie.Id) {
-      dispatch(setLastSeen(movie.Id));
-    }
+    if (delayRef.current) clearTimeout(delayRef.current);
+    delayRef.current = setTimeout(() => {
+      setMovieToShow(movie);
+      if (lastSeenId !== movie.Id) dispatch(setLastSeen(movie.Id));
+    }, 2000);
   };
 
   return (
