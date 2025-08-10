@@ -4,12 +4,13 @@ import FeaturedVideo from '../components/FeaturedVideo';
 import TrendingCarousel from '../components/TrendingCarousel';
 import { useGetVideosQuery } from '../videos/videosApi';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLastSeen } from '../videos/videosSlice';
 import { RootState } from '../app/store';
 import { Movie } from '../models/movie';
+import { useActions } from '../hooks/actions';
 
 export default function Home() {
-  const { data } = useGetVideosQuery();
+  const {data} = useGetVideosQuery();
+  const {setLastSeen} = useActions();
   const dispatch = useDispatch();
   const [selectedMenuItem, setSelectedMenuItem] = useState<string>('home');
   const [movieToShow, setMovieToShow] = useState<Movie | null>(null);
